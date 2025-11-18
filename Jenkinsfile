@@ -1,11 +1,6 @@
 pipeline {
     
-        agent {
-    docker {
-        image 'docker:24-dind'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
-}
+        agent { any }
 
     environment {
         APP_NAME = "simple-java-docker-app"
