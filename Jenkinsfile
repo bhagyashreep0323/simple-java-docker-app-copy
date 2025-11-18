@@ -1,10 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'my-docker-agent:latest'   // mandatory
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // optional for Docker-in-Docker
-        }
+    
+        agent {
+    docker {
+        image 'docker:24-dind'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
+}
 
     environment {
         APP_NAME = "simple-java-docker-app"
