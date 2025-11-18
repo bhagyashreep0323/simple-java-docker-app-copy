@@ -1,5 +1,10 @@
 pipeline {
-    agent { label 'docker-agent' }
+    agent {
+        docker {
+            image 'docker:24-dind'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         APP_NAME = "simple-java-docker-app"
@@ -16,6 +21,15 @@ pipeline {
             steps {
                 git url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git',
                     credentialsId: 'github-creds'
+            }
+        }
+
+        stage("Install AWS CLI") {
+            steps {
+                sh """
+                apk add --no-cache python3 py3-pip
+                pip3 install awscli
+                """
             }
         }
 
