@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:24-dind'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent { docker }
 
     environment {
         APP_NAME = "simple-java-docker-app"
@@ -20,7 +15,7 @@ pipeline {
         stage("Checkout Code") {
             steps {
                 git url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git',
-                    credentialsId: 'github-creds'
+                    branch: 'main'
             }
         }
 
