@@ -1,5 +1,5 @@
 pipeline {
-    agent any  // must be directly under pipeline
+    agent any
 
     environment {
         APP_NAME = "simple-java-docker-app"
@@ -14,8 +14,13 @@ pipeline {
 
         stage("Checkout Code") {
             steps {
-                git url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git',
-                    branch: 'main'
+                git url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git', branch: 'main'
+            }
+        }
+
+        stage("Build JAR") {
+            steps {
+                sh "mvn clean package -DskipTests"
             }
         }
 
