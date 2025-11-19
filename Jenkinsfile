@@ -3,18 +3,14 @@ pipeline {
 
     environment {
         APP_NAME = "simple-java-docker-app"
+        ECR_REPO = "853715069488.dkr.ecr.ap-south-1.amazonaws.com/mydemorepo-32"
         AWS_REGION = "ap-south-1"
-        ACCOUNT_ID = "853715069488"
-        ECR_URL = "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-        ECR_REPO_NAME = "mydemorepo-32"
-        ECR_REPO = "${ECR_URL}/${ECR_REPO_NAME}"
     }
 
     stages {
-
         stage("Checkout Code") {
             steps {
-                git url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/bhagyashreep032/simple-java-docker-app.git'
             }
         }
 
@@ -37,7 +33,7 @@ pipeline {
             steps {
                 sh """
                 aws ecr get-login-password --region ${AWS_REGION} \
-                | docker login --username AWS --password-stdin ${ECR_URL}
+                | docker login --username AWS --password-stdin ${ECR_REPO}
                 """
             }
         }
